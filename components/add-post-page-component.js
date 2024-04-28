@@ -1,12 +1,13 @@
 import { POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import { posts, goToPage } from "../index.js";
+// import { posts, goToPage } from "../index.js";
+import { goToPage } from "../index.js";
 import { renderUploadImageComponent } from "./upload-image-component.js";
 import { sanitize } from "../helpers.js";
 
-let imageUrl = "";
-
-export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
+// export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
+export function renderAddPostPageComponent({ appEl, posts, onAddPostClick }) {
+  let imageUrl = "";
   const render = () => {
     // TODO: Реализовать страницу добавления поста
     const appHtml = `
@@ -44,7 +45,12 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
     renderUploadImageComponent({
       element: appEl.querySelector(".upload-image-container"),
       onImageUrlChange(newImageUrl) {
-        imageUrl = newImageUrl;
+        if (!newImageUrl.trim()) {
+          alert("Загрузите фото");
+          return;
+        } else {
+          imageUrl = newImageUrl.trim();
+        }
       },
     });
 
